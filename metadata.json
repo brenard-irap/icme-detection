@@ -1,1 +1,21 @@
-{"id": "module_icme", "name": "ICME", "description": "ICME detection model", "args": [], "hyperparameters": [], "defaults": [], "output": {"type": "timetable"}, "install": {"files": ["data", "utils", "main.py"], "executable": "main"}} 
+{
+	"name": "ICME detection",
+	"description": "# ICME detection model from WIND data.\n\nThis module use the predefined models available in [Github](https://github.com/gautiernguyen/Automatic-detection-of-ICMEs-at-1-AU-a-deep-learning-approach).\n\nThe methode is fully describe in: Automatic detection of Interplanetary Coronal Mass Ejections from in-situ data: a deep learning approach - Gautier Nguyen, Nicolas Aunai, Dominique Fontaine, Erwan Le Pennec, Joris Van den Bossche, Alexis Jeandet, Brice Bakkali, Louis Vignoli, and Bruno Regaldo-Saint Blancard - Published 2019 April 2 The American Astronomical Society. The Astrophysical Journal, Volume 874, Number 2. [DOI](https://doi.org/10.3847/1538-4357/ab0d24)",
+	"args": [],
+	"hyperparameters": [],
+	"defaults": {
+		"start":"2011-03-26T00:00:00",
+		"stop":"2011-04-06T00:00:00"
+
+	},
+	"output": {
+		"type": "timetable",
+		"filename": "events_tt_output.csv"
+	},
+	"install": {
+		"python_version": "3.5",
+		"requirements": "requirements.txt",
+		"files": ["data", "utils", "main.py"],
+		"executable": "main"
+	}
+} 
