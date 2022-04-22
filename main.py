@@ -11,6 +11,7 @@ from utils.gautierfunctions.process import turn_peaks_to_clouds
 import logging.config
 import sys
 import os
+import argparse
 
 PLOT = False
 """
@@ -21,12 +22,12 @@ DEBUG = False
 """Run in debug mode without passing arguments to the module and using directly START_TIME_DEBUG and STOP_TIME_DEBUG 
 defined just below """
 
-START_TIME_DEBUG = "2012-7-2T20:30:00"
+START_TIME_DEBUG = "2012-07-02T20:30:00"
 """
 The start time to use in order to debug, feel free to modify it
 """
 
-STOP_TIME_DEBUG = "2012-7-20T23:59:00"
+STOP_TIME_DEBUG = "2012-07-20T23:59:00"
 """
 The stop time to use in order to debug, feel free to modify it
 """
@@ -59,28 +60,22 @@ def main():
 
     logger.info("Checking arguments... ")
     if not DEBUG:
-        if nb_arguments < 4:
-            message = "Expected at least 4 arguments. You give only: ", nb_arguments, *arguments
-            logger.error(message)
+        parser = argparse.ArgumentParser()
+        parser.add_argument("output_dir", type=str)
+        parser.add_argument("--start", type=str, default=START_TIME_DEBUG)
+        parser.add_argument("--stop", type=str, default=STOP_TIME_DEBUG)
+
+        args = parser.parse_args()
+
+        destination_folder_path = args.output_dir
+        start = args.start
+        stop = args.stop
+        try:
+            start = validate_time_format(start)
+            stop = validate_time_format(stop)
+        except ValueError as error:
+            logger.error('Caught this error: ' + repr(error))
             sys.exit(errno.EINVAL)
-        else:
-            message = "Given arguments: ", *arguments
-            logger.info(message)
-            destination_folder_path = arguments[1]
-            if nb_arguments == 4:
-                start = arguments[2]
-                stop = arguments[3]
-            else:
-                start = arguments[3]
-                stop = arguments[4]
-            message = "Checking the formats of start time and stop time..."
-            logger.info(message)
-            try:
-                start = validate_time_format(start)
-                stop = validate_time_format(stop)
-            except ValueError as error:
-                logger.error('Caught this error: ' + repr(error))
-                sys.exit(errno.EINVAL)
     else:
         start = validate_time_format(START_TIME_DEBUG)
         stop = validate_time_format(STOP_TIME_DEBUG)
