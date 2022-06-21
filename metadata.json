@@ -16,6 +16,10 @@
 		"python_version": "3.6",
 		"requirements": "requirements.txt",
 		"files": ["data", "utils", "main.py"],
-		"executable": "main"
+		"executable": "main",
+		"post_process": [
+			"ADD https://drive.google.com/uc?export=download&id=1rcnGVJrWYxYsrR7PdeaoBCnnDw5jU7gX&confirm=t ./data/datasets/datasetWithSpectro.parquet",
+			"RUN chmod 775 ./data/datasets/datasetWithSpectro.parquet"
+		]
 	}
 } 
